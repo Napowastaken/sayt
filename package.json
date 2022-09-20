@@ -1,0 +1,10 @@
+{
+    "main": "src/index.js",
+    "dependencies": {
+        "canvas": "^2.9.3",
+        "discord.js": "^14.3.0"
+    },
+    "devDependencies": {
+        "dotenv": "^16.0.2"
+    }
+}
