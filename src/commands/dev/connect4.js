@@ -108,8 +108,8 @@ You have one minute to either accept or decline the invitation.`,
             embed.setDescription(board.map(b => b.map(i => values[i] || i).join(' ')).join('\n'));
 
             // Horizontal/vertical win check
-            if (line.join('').includes(turn.repeat(4)) ||
-            board.map(l => l[position]).join('').includes(turn.repeat(4))) {
+            if (line.map(t => t || 'g').join('').includes(turn.repeat(4)) ||
+            board.map(l => l[position] || 'g').join('').includes(turn.repeat(4))) {
                 return collector.stop(`**(${values[turn]}) ${client.escMD(turn == 'r' ? user.tag : interaction.user.tag)}** is the winner!`);
             }
 
@@ -118,13 +118,13 @@ You have one minute to either accept or decline the invitation.`,
             i.update({ embeds: [embed], components: i.message.components });
             
         }).on('end', (collected, reason) => {
-            let content = ''
-            if (reason == 'idle') content = 'Game ended due to inactivity.'
+            let content = '';
+            if (reason == 'idle') content = 'Game ended due to inactivity.';
             else content = reason;
             
             embed.setTitle(null);
             embed.setFooter(null);
-            interaction.editReply({ content, embeds: [embed], components: [] })
+            interaction.editReply({ content, embeds: [embed], components: [] });
         });
     }
 });
