@@ -36,7 +36,8 @@ module.exports = new Command({
         type: 'User',
         required: true,
         notClient: true,
-        guildMember: true
+        guildMember: true,
+        notYourself: true
     }],
 
     async run(interaction, client) {
@@ -44,6 +45,11 @@ module.exports = new Command({
             ':one:', ':two:', ':three:', ':four:', ':five:', ':six:', ':seven:'
         ]]);
         const user = interaction.options.getUser('member');
+        if (user.bot) return interaction.reply({
+            content: 'You trying to challenge a bot? Maybe try getting some real friends instead lmao',
+            ephemeral: true
+        });
+        
         const turns = {
             r: user.id,
             y: interaction.user.id
@@ -86,6 +92,8 @@ You have one minute to either accept or decline the invitation.`,
             components: components.game
         });
 
+        let collecting = true;
+
         const collector = reply.createMessageComponentCollector({
             filter: i => [interaction.user.id, user.id].includes(i.user.id)
             && i.customId.startsWith('connect4/game/'),
@@ -110,8 +118,30 @@ You have one minute to either accept or decline the invitation.`,
             // Horizontal/vertical win check
             if (line.map(t => t || 'g').join('').includes(turn.repeat(4)) ||
             board.map(l => l[position] || 'g').join('').includes(turn.repeat(4))) {
-                return collector.stop(`**(${values[turn]}) ${client.escMD(turn == 'r' ? user.tag : interaction.user.tag)}** is the winner!`);
+                collecting = false;
+                collector.stop(`**(${values[turn]}) ${client.escMD(turn == 'r' ? user.tag : interaction.user.tag)}** is the winner!`);
             }
+
+            // Diagonal win check
+            for (let num of [1, -1]) {
+                board.forEach((line, rowIndex) => {
+                    if (line.some((item, index) => {
+                        if (!item) return;
+
+                        return [1, -1].some(num2 => 
+                        [item, board[rowIndex + num2]?.[index + num],
+                        board[rowIndex + num2 * 2]?.[index + num * 2],
+                        board[rowIndex + num2 * 3]?.[index + num * 3]]
+                        .join('').includes(turn.repeat(4))
+                        )
+                    })) {
+                        collecting = false;
+                        return collector.stop(`**(${values[turn]}) ${client.escMD(turn == 'r' ? user.tag : interaction.user.tag)}** is the winner!`);
+                    }
+                });
+            }
+
+            if (!collecting) return;
 
             turn = (turn == 'r' ? 'y' : 'r');
             embed.setTitle(`It's ${turn == 'r' ? user.tag : interaction.user.tag}'s turn! (${values[turn]})`);
