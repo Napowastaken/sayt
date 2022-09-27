@@ -84,7 +84,7 @@ You have one minute to either accept or decline the invitation.`,
         let embed = new EmbedBuilder()
         .setColor('Random')
         .setDescription(board.map(b => b.map(i => values[i] || i).join(' ')).join('\n'))
-        .setFooter({ text: 'Note: Game will automatically end after a minute of inactivity.' })
+        .setFooter({ text: 'Note: Game will automatically end after 5 minutes of inactivity.' })
         .setTitle(`It's ${user.tag}'s turn! (${values.r})`);
         invite.update({
             content: null,
@@ -97,7 +97,7 @@ You have one minute to either accept or decline the invitation.`,
         const collector = reply.createMessageComponentCollector({
             filter: i => [interaction.user.id, user.id].includes(i.user.id)
             && i.customId.startsWith('connect4/game/'),
-            idle: 60000
+            idle: 300000
         });
         collector.on('collect', i => {
             if (turns[turn] != i.user.id) return i.reply({
