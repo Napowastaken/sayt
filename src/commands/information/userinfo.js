@@ -1,4 +1,4 @@
-const { EmbedBuilder, ActivityType } = require('discord.js');
+const { EmbedBuilder, ActivityType, GuildMember } = require('discord.js');
 const fetch = require('node-fetch');
 const Command = require('../../utils/classes/Command');
 module.exports = new Command({
@@ -22,7 +22,7 @@ module.exports = new Command({
         .setColor('Random')
         .setImage(`https://cdn.discordapp.com/banners/${member.id}/${fetchedUser.banner}.${fetchedUser.banner?.startsWith('a_') ? 'gif' : 'png'}?size=512`);
 
-        if (member.user) {
+        if (member instanceof GuildMember) {
 
             const status = member.presence?.activities?.find(a => a.type == ActivityType.Custom);
             embed.setThumbnail(member.displayAvatarURL({ size: 512, extension: 'png' }))
@@ -50,9 +50,8 @@ module.exports = new Command({
 > **Activities**
 ${member.presence?.activities?.filter(a => a.type != ActivityType.Custom).map(a =>
 `\`${ActivityType[`${a.type}`]} ${client.escTicks(a.name)}\`
-<t:${~~(new Date(a.timestamps.start).getTime() / 1000)}:R>${a.details ? `\n\`${client.escTicks(a.details)}\`` : ''}
+<t:${~~(a.createdTimestamp / 1000)}:R>${a.details ? `\n\`${client.escTicks(a.details)}\`` : ''}
 ${a.state ? `\`${client.escTicks(a.state)}\`` : ''}`).join('\n\n') || '`None`'}`);
-        // <Activity>.createdTimestamp returns NaN
 
         } else {
 

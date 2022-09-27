@@ -74,7 +74,7 @@ module.exports = new Event({
                                     });
                                 }
 
-                                if (member.user) {
+                                if (member instanceof GuildMember) {
 
                                     if (option.higherRole && interaction.user.id != interaction.guild.ownerId && interaction.member.roles.highest.position <= member.roles.highest.position) {
                                         return interaction.reply({
