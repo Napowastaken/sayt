@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const InfractionManager = require('./InfractionManager');
-const Database = require('saytdb');
+const Database = require('./Database');
 const fs = require('fs');
 const Command = require('./Command');
 const UserContextMenuCommand = require('./UserContextMenuCommand');

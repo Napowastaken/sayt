@@ -1,4 +1,4 @@
-const Database = require('saytdb');
+const Database = require('./Database');
 const Infraction = require('./Infraction');
 const ms = require('../functions/ms');
 const { CommandInteraction, Guild, User, Snowflake } = require('discord.js');
