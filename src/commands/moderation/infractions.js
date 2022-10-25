@@ -1,4 +1,4 @@
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require('discord.js');
 const Command = require('../../utils/classes/Command');
 module.exports = new Command({
 
@@ -125,7 +125,7 @@ module.exports = new Command({
                 const reply = await interaction.fetchReply();
 
                 reply.createMessageComponentCollector({
-                    idle: 300000,
+                    idle: 300000, componentType: ComponentType.Button,
                     filter: i => i.user.id == interaction.user.id && i.customId.startsWith('infractions.list/')
                 }).on('collect', i => {
 
@@ -137,7 +137,7 @@ module.exports = new Command({
                     .setFooter({ text: `Showing page ${page + 1}/${Math.ceil(infractions.length / 5)}` });
                     i.update({ embeds: [embed], components: [ActionRowBuilder.from(reply.components[0])] });
 
-                }).on('end', () => interaction.editReply({ components: [] }));
+                }).once('end', () => interaction.editReply({ components: [] }));
             } break;
 
             case 'reason': {

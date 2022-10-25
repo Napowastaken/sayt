@@ -1,4 +1,4 @@
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require("discord.js");
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, ComponentType } = require("discord.js");
 const Command = require("../../utils/classes/Command");
 
 module.exports = new Command({
@@ -93,7 +93,8 @@ You get a shield for this turn, deal guaranteed damage of 10-15 points and heal 
         reply.components = rows;
         
         const collector = reply.createMessageComponentCollector({
-            idle: 120000, filter: i => i.user.id == interaction.user.id
+            idle: 120000, filter: i => i.user.id == interaction.user.id,
+            componentType: ComponentType.Button
         });
         
         collector.on('collect', i => {
@@ -156,6 +157,7 @@ You get a shield for this turn, deal guaranteed damage of 10-15 points and heal 
             hp.user -= damage.boss;
             hp.boss -= damage.user;
 
+            if (hp.user > maxHP.user) hp.user = maxHP.user;
             if (_super < 30) _super -= damage.boss;
             if (!i.customId.endsWith('/super')) _super += damage.user;
             if (_super < 0) _super = 0;
@@ -201,7 +203,7 @@ You get a shield for this turn, deal guaranteed damage of 10-15 points and heal 
                 ] });
             }, 2500);
 
-        }).on('end', (collected, reason) => {
+        }).once('end', (collected, reason) => {
             switch(reason) {
                 case 'idle': {
                     interaction.editReply({ content: 'Game ended due to inactivity.', components: [] });

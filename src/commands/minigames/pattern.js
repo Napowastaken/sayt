@@ -1,4 +1,4 @@
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require("discord.js");
 const Command = require("../../utils/classes/Command");
 const values = {
     r: '🟥',
@@ -58,7 +58,8 @@ module.exports = new Command({
         let count = 0;
         const reply = await interaction.fetchReply();
         const collector = reply.createMessageComponentCollector({
-            filter: i => i.user.id == interaction.user.id, idle: 15000
+            filter: i => i.user.id == interaction.user.id, idle: 15000,
+            componentType: ComponentType.Button
         });
 
         collector.on('collect', i => {
@@ -72,7 +73,7 @@ module.exports = new Command({
             count++;
             if (count == blocks) return collector.stop('win');
             i.update({ embeds: [embed] });
-        }).on('end', (collected, reason) => {
+        }).once('end', (collected, reason) => {
 
             let content = '';
             switch(reason) {

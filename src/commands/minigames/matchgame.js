@@ -93,7 +93,7 @@ module.exports = new Command({
             }
             if (reply.components.every(r => r.components.every(c => c.disabled))) return collector.stop('win')
             await interaction.editReply({ components: reply.components.map(c => ActionRowBuilder.from(c)), embeds: [] });
-        }).on('end', (collected, reason) => {
+        }).once('end', (collected, reason) => {
             switch(reason) {
                 case 'win': {
                     embed.setDescription(`> **The extra item is: ${values[gameItems.find(item => gameItems.filter(i => i == item).length == 1)]}**`)

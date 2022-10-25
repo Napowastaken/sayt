@@ -1,4 +1,4 @@
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, Collection, Collector } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, Collection, Collector, ComponentType } = require('discord.js');
 const Command = require('../../utils/classes/Command');
 
 let gameComponents = [...Array(8).keys()].slice(1).map(c => new ButtonBuilder({
@@ -97,7 +97,7 @@ You have one minute to either accept or decline the invitation.`,
         const collector = reply.createMessageComponentCollector({
             filter: i => [interaction.user.id, user.id].includes(i.user.id)
             && i.customId.startsWith('connect4/game/'),
-            idle: 300000
+            idle: 300000, componentType: ComponentType.Button 
         });
         collector.on('collect', i => {
             if (turns[turn] != i.user.id) return i.reply({
@@ -147,7 +147,7 @@ You have one minute to either accept or decline the invitation.`,
             embed.setTitle(`It's ${turn == 'r' ? user.tag : interaction.user.tag}'s turn! (${values[turn]})`);
             i.update({ embeds: [embed], components: i.message.components });
             
-        }).on('end', (collected, reason) => {
+        }).once('end', (collected, reason) => {
             let content = '';
             if (reason == 'idle') content = 'Game ended due to inactivity.';
             else content = reason;

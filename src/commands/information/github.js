@@ -1,5 +1,5 @@
 const fetch = require('node-fetch').default;
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require('discord.js');
 const Command = require('../../utils/classes/Command');
 module.exports = new Command({
 	name: 'github',
@@ -112,7 +112,7 @@ module.exports = new Command({
 				
 				reply.createMessageComponentCollector({
 					filter: i => i.user.id == interaction.user.id && i.customId.startsWith('github.repository/'),
-					idle: 300000
+					idle: 300000, componentType: ComponentType.Button
 				}).on('collect', i => {
 
 					page += i.customId.endsWith('/next') ? 1 : -1;
@@ -124,7 +124,7 @@ module.exports = new Command({
 					.setFooter({ text: `Page ${page + 1}/${items.length}` });
 					i.update({ embeds: [embed], components: [ActionRowBuilder.from(reply.components[0])] });
 
-				}).on('end', () => interaction.editReply({ components: [] }));
+				}).once('end', () => interaction.editReply({ components: [] }));
 			}
 		}
 	}
