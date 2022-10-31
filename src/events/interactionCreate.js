@@ -17,7 +17,8 @@ module.exports = new Event({
         if (interaction.type != InteractionType.ApplicationCommand) return;
         const cmd = client.commands.get(interaction.commandName);
 
-        if (cmd.ownerOnly && interaction.user != client.application.owner) {
+        if (cmd.ownerOnly && (interaction.user != client.application.owner) &&
+        !(process.env.OWNER_COMMANDS_WL?.split(',').includes(interaction.user.id))) {
             return interaction.reply({
                 content: 'This command is developer only.',
                 ephemeral: true
