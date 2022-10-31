@@ -76,6 +76,7 @@ module.exports = class Client extends Discord.Client {
     }
 
     async start() {
+        const start = Date.now();
         for (const file of fs.readdirSync('./src/events')) {
             const event = require(`../../events/${file}`);
             this.on(event.name, async (...args) => await (require(`../../events/${file}`).run(this, ...args)));
@@ -83,6 +84,7 @@ module.exports = class Client extends Discord.Client {
         await this.login(process.env.TOKEN);
         await this.application.fetch();
         this.loadCommands(true);
+        console.log(`Logged in! ${Date.now() - start}ms`);
     }
 
     /** @param {string} text */

@@ -3,19 +3,21 @@ const Command = require('../../utils/classes/Command');
 const replies = [
     `Take this 🛌. That's so you keep on dreaming.`,
     `I don't know and I don't care.`,
-    `I prefer to not talk about it.`, 
+    `I prefer not talking about it.`, 
     `What kind of question is this`, 
     `✨ Y E S ✨`,
     `✨ N O ✨`,
     `I don't think so. Do you?`,
     `what the heck is this question`,
     `Maybe. Maybe.`,
-    `Well as you can see, the grass is green too. Wait- You have never seen it!`,
     `Sure. And they are lying about it.`,
     `This is false. Source: me`,
     `You got a nice question ngl`,
     `This is an 8 ball. Not a reality changer.`,
-    `I didn't understand. Could you repeat the question?`
+    `I didn't understand. Could you repeat the question?`,
+    `Give me a question like this again and I will ban you.`,
+    `Yeah, and I'm Bill Gates`,
+    `Go ask your father, I mean here he is: \u200b \u200b \u200b `
 ]
 
 module.exports = new Command({
