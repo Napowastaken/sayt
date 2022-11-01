@@ -1,4 +1,3 @@
-const { AuditLogEvent } = require("discord.js");
 const Event = require("../utils/classes/Event");
 const GuildSnipe = require("../utils/classes/GuildSnipe");
 module.exports = new Event({
@@ -9,7 +8,8 @@ module.exports = new Event({
         client.snipes.set(message.channel.id, new GuildSnipe({
             author: message.author.tag,
             content: message.content,
-            attachment: message.attachments.first()?.url
+            attachment: message.attachments.first()?.url,
+            reference: message.reference
         }));
     }
 });

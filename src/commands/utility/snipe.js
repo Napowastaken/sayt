@@ -29,6 +29,9 @@ module.exports = new Command({
 **Author:** \`${client.escTicks(snipe.author)}\`
 **Content**
 ${snipe.content || 'None'}`);
-        interaction.reply({ embeds: [embed] });
+        interaction.reply({ 
+            content: snipe.reference && `**In reply to [this message](${snipe.reference.url})**`,
+            embeds: [embed]
+        });
     }
 });
