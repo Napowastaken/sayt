@@ -77,7 +77,7 @@ module.exports = new Event({
 
                                 if (member instanceof GuildMember) {
 
-                                    if (option.higherRole && interaction.user.id != interaction.guild.ownerId && interaction.member.roles.highest.position <= member.roles.highest.position) {
+                                    if (option.higherRole && (interaction.user.id != interaction.guild.ownerId) && interaction.member.roles.highest.position <= member.roles.highest.position) {
                                         return interaction.reply({
                                             content: `You need a role higher than **${client.escMD(member.user.tag)}** to do this.`,
                                             ephemeral: true
@@ -117,14 +117,14 @@ module.exports = new Event({
                                     });
                                 }
 
-                                if (option.higher && interaction.user.id != interaction.guild.ownerId && role.position >= interaction.member.roles.highest.position) {
+                                if (option.higher && (interaction.user.id != interaction.guild.ownerId) && role.position >= interaction.member.roles.highest.position) {
                                     return interaction.reply({
                                         content: `${role} needs to be lower than your highest role in hierachy.`,
                                         ephemeral: true
                                     });
                                 }
 
-                                if (option.higherFromBot && interaction.user.id != interaction.guild.ownerId && role.position >= interaction.guild.members.me.roles.highest.position) {
+                                if (option.higherFromBot && role.position >= interaction.guild.members.me.roles.highest.position) {
                                     return interaction.reply({
                                         content: `${role} needs to be lower than my highest role in hierachy.`,
                                         ephemeral: true
