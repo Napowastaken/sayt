@@ -42,7 +42,7 @@ module.exports = new Command({
         
         client.infractions.add({ interaction, callback() {
             interaction.guild.members.ban(member.id, {
-                deleteMessageSeconds: time.seconds,
+                deleteMessageSeconds: time?.seconds,
                 reason: `Banned by ${interaction.user.tag} (${interaction.user.id}) | ${reason}`
             });
         } });
