@@ -1,4 +1,6 @@
-const { EmbedBuilder, ActivityType, GuildMember } = require('discord.js');
+const { EmbedBuilder, ActivityType, GuildMember, UserFlags } = require('discord.js');
+// Active developer badge is not supported on djs yet
+UserFlags.ActiveDeveloper = 4194304;
 const fetch = require('node-fetch');
 const Command = require('../../utils/classes/Command');
 module.exports = new Command({

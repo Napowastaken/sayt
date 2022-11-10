@@ -58,7 +58,8 @@
         "CertifiedModerator": "Certified discord moderator",
         "BotHTTPInteractions": "Bot that has a website/dashboard",
         "Quarantined": "Quarantined",
-        "Spammer": "Possible spammer account"
+        "Spammer": "Possible spammer account",
+        "ActiveDeveloper": "Active bot developer"
     },
     
     "statuses": {
