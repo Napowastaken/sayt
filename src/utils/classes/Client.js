@@ -7,6 +7,7 @@ const UserContextMenuCommand = require('./UserContextMenuCommand');
 const GuildSnipe = require('./GuildSnipe');
 const MessageContextMenuCommand = require('./MessageContextMenuCommand');
 const EditSnipe = require('./EditSnipe');
+const CurrencyManager = require('./CurrencyManager');
 
 module.exports = class Client extends Discord.Client {
     /** @param {Discord.ClientOptions} options */
@@ -53,6 +54,7 @@ module.exports = class Client extends Discord.Client {
     games = new Discord.Collection();
     
     infractions = new InfractionManager(this);
+    currency = new CurrencyManager(this);
     names = require('../../misc/names.json');
     emotes = require('../../misc/emotes.json');
 

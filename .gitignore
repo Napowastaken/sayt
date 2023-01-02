@@ -1,3 +1,12 @@
 node_modules
 .env
 package-lock.json
+
+src/commands/dev/*.js
+!src/commands/dev/eval.js
+!src/commands/dev/Evaluate.js
+!src/commands/dev/reload.js
+!src/commands/dev/request.js
+src/database/currency.json
+src/misc/currency
+src/utils/classes/CurrencyManager.js

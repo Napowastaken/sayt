@@ -65,7 +65,7 @@ module.exports = class MessageContextMenuCommand {
         this.data = {
             type: ApplicationCommandType.Message,
             name: this.name,
-            defaultMemberPermissions: this.permissions,
+            defaultMemberPermissions: this.permissions ?? null,
             dmPermission: !this.guildOnly
         }
     }

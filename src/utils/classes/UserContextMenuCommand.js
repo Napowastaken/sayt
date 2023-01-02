@@ -68,7 +68,7 @@ module.exports = class UserContextMenuCommand {
         this.data = {
             name: this.name,
             type: 2,
-            defaultMemberPermissions: this.permissions,
+            defaultMemberPermissions: this.permissions ?? null,
             dmPermission: !this.guildOnly
         }
     }

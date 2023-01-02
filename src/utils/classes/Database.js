@@ -149,14 +149,14 @@ module.exports = class Database {
     /**
      * @description Remove any item from a list.
      * @param {string} key Name of the key where the list is.
-     * @param {any} item Item to remove.
+     * @param {number} index Index of the item to remove.
      */
-    removeFromList(key, item) {
+    removeFromList(key, index) {
         const list = this.content[key];
         if (typeof(key) != 'string') throw TypeError('Key must be a string.');
         this.load();
         if (!Array.isArray(list)) throw TypeError('Value of the key must be a list.');
-        if (list.includes(item)) this.content[key].splice(list.indexOf(item), 1);
+        if (list[index]) this.content[key].splice(index, 1);
         this.save();
     }
 

@@ -16,6 +16,7 @@ module.exports = new Command({
     }],
 
     async run(interaction, client) {
+        await interaction.deferReply();
         const image = interaction.options.getAttachment('image');
         const height = (image.height > 256 ? image.height : 256) / 2;
         const { canvas, ctx } = await new BaseCanvas(image.width, height + image.height);
@@ -24,6 +25,6 @@ module.exports = new Command({
         ctx.drawImage(await Canvas.loadImage(image.url), 0, height, canvas.width, canvas.height - height);
 
         const attachment = new AttachmentBuilder(canvas.toBuffer(), { name: 'textballoon.png' });
-        interaction.reply({ files: [attachment] });
+        interaction.followUp({ files: [attachment] });
     }
 });
