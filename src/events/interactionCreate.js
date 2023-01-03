@@ -160,6 +160,20 @@ module.exports = new Event({
                     content: 'This message must include some content in it.',
                     ephemeral: true
                 });
+
+                if (cmd.withAttachment && !interaction.targetMessage.attachments.size) return interaction.reply({
+                    content: 'This message must include some attachment in it.',
+                    ephemeral: true
+                });
+
+                if (cmd.compatibleWithCanvas && interaction.targetMessage.attachments.size) try {
+                    await Canvas.loadImage(interaction.targetMessage.attachments.first().url);
+                } catch {
+                    return interaction.reply({
+                        content: 'This file format is not supported.',
+                        ephemeral: true
+                    });
+                }
             } break;
         }
 

@@ -25,6 +25,6 @@ module.exports = new Command({
         ctx.drawImage(await Canvas.loadImage(image.url), 0, height, canvas.width, canvas.height - height);
 
         const attachment = new AttachmentBuilder(canvas.toBuffer(), { name: 'textballoon.png' });
-        interaction.followUp({ files: [attachment] });
+        await interaction.followUp({ files: [attachment] });
     }
 });

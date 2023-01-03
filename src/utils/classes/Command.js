@@ -67,16 +67,10 @@ const {
 
 module.exports = class Command {
 
-    /** 
-     * The name of the command.
-     * @type {string}
-     */
-    name;
-    /** 
-     * The description of the command.
-     * @type {string}
-     */
-    description;
+    /** The name of the command. */
+    name = '';
+    /** The description of the command. */
+    description = '';
     /** 
      * The default permissions of the command. 
      * @type {PermissionResolvable[] | undefined} 
@@ -87,16 +81,10 @@ module.exports = class Command {
      * @type {PermissionResolvable[] | undefined}
      */
     clientPermissions;
-    /** 
-     * Whether this command can only be used in guilds. 
-     * @type {boolean | undefined}
-     */
-    guildOnly;
-    /** 
-     * Whether this command can only be used by the owner of the bot.
-     * @type {boolean | undefined}
-     */
-    ownerOnly;
+    /** Whether this command can only be used in guilds. */
+    guildOnly = false;
+    /** Whether this command can only be used by the owner of the bot. */
+    ownerOnly = false;
     /**
      * The options of the command.
      * @type {CommandOptionsOption[] | undefined}
@@ -107,11 +95,8 @@ module.exports = class Command {
      * @type {RunFunction} 
      */
     run;
-    /** 
-     * The category of the command. 
-     * @type {string} 
-     */
-    category;
+    /** The category of the command. */
+    category = '';
 
     /**
      * @param {CommandOptions} options
